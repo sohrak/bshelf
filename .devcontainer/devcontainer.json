@@ -1,5 +1,5 @@
 {
-  "image": "ghcr.io/rails/devcontainer/images/ruby",
+  "image": "ghcr.io/rails/devcontainer/images/ruby:3.4.0",
   "features": {
     "ghcr.io/rails/devcontainer/features/activestorage": {}
   },
@@ -7,7 +7,7 @@
     "vscode": {
       "extensions": [
         "Shopify.ruby-lsp"
-		  ]
+      ]
     }
   }
 }
