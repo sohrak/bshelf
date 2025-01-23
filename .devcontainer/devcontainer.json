@@ -1,0 +1,6 @@
+{
+  "image": "ghcr.io/rails/devcontainer/images/ruby",
+  "features": {
+    "ghcr.io/rails/devcontainer/features/activestorage": {}
+  }
+}
