@@ -61,3 +61,8 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+# Sorbet
+gem "sorbet", group: :development
+gem "sorbet-runtime"
+gem "tapioca", require: false, group: [ :development, :test ]
