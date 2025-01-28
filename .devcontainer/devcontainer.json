@@ -25,10 +25,10 @@
   "customizations": {
     "vscode": {
       "extensions": [
-        "Shopify.ruby-lsp"
+        "Shopify.ruby-extensions-pack"
       ],
       "settings": {
-        "workbench.colorTheme": "Visual Studio Dark"
+        "workbench.colorTheme": "Spinel"
       }
     }
   },
