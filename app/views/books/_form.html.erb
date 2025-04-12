@@ -1,0 +1,65 @@
+<%= form_with(model: book, local: true) do |form| %>
+  <% if book.errors.any? %>
+    <aside style="background-color: var(--pico-form-element-invalid-active-border-color); color: var(--pico-color-on-invalid); padding: var(--pico-block-spacing-vertical) var(--pico-block-spacing-horizontal); margin-bottom: var(--pico-block-spacing-vertical); border-radius: var(--pico-border-radius);">
+      <hgroup>
+        <h4 style="margin-bottom: 0.5rem;"><%= pluralize(book.errors.count, "error") %> prohibited this book from being saved:</h4>
+      </hgroup>
+      <ul>
+        <% book.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </aside>
+  <% end %>
+
+  <%# Use grid for better layout %>
+  <div class="grid">
+    <label>
+      Title *
+      <%= form.text_field :title, required: true, aria_invalid: book.errors[:title].any? %>
+    </label>
+    <label>
+      Author *
+      <%= form.text_field :author, required: true, aria_invalid: book.errors[:author].any? %>
+    </label>
+  </div>
+
+  <div class="grid">
+    <label>
+      ISBN
+      <%= form.text_field :isbn %>
+    </label>
+    <label>
+      Genre
+      <%= form.text_field :genre %>
+    </label>
+  </div>
+
+   <div class="grid">
+    <label>
+      Publisher
+      <%= form.text_field :publisher %>
+    </label>
+     <label>
+       Publication Date
+       <%= form.date_field :publication_date %>
+     </label>
+     <label>
+       Page Count
+       <%= form.number_field :page_count, min: 0 %>
+     </label>
+  </div>
+
+  <label>
+    Description
+    <%= form.text_area :description, rows: 5 %>
+  </label>
+
+  <hr>
+  <small>* Required fields</small>
+
+  <footer class="grid">
+    <%= form.submit "Save Book", class: "contrast" %>
+    <%= link_to "Cancel", root_path, role: "button", class: "secondary outline" %>
+  </footer>
+<% end %>
