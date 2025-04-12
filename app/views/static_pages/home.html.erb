@@ -1,0 +1,33 @@
+<article>
+  <header><h1 style="text-align: center;">Welcome to bshelf</h1></header>
+  <p style="text-align: center;">Organize and search your book collection.</p>
+
+  <div class="grid">
+    <article>
+      <hgroup>
+        <h2>Search Books</h2>
+        <p>Find books by title, author, ISBN, or genre.</p>
+      </hgroup>
+      <%= form_with(url: books_path, method: :get, local: true) do |form| %>
+        <%= form.search_field :query, placeholder: "Search term...", aria_label: "Search" %>
+        <%= form.submit "Search", class: "contrast" %>
+      <% end %>
+    </article>
+
+    <article>
+      <hgroup>
+        <h2>Browse Collection</h2>
+        <p>View all books in the library.</p>
+      </hgroup>
+      <%= link_to "Browse All Books", browse_books_path, role: "button", class: "contrast" %>
+    </article>
+
+    <article>
+      <hgroup>
+        <h2>Add a New Book</h2>
+        <p>Manually add a book to the collection.</p>
+      </hgroup>
+      <%= link_to "Add Book", new_book_path, role: "button", class: "contrast" %>
+    </article>
+  </div>
+</article>

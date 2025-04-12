@@ -1,0 +1,47 @@
+<article>
+  <header>
+    <hgroup>
+      <h1><%= @book.title %></h1>
+      <h2>by <%= @book.author %></h2>
+    </hgroup>
+  </header>
+
+  <figure>
+  <table>
+    <tbody>
+      <tr>
+        <th scope="row">ISBN</th>
+        <td><%= @book.isbn.presence || 'N/A' %></td>
+      </tr>
+      <tr>
+        <th scope="row">Genre</th>
+        <td><%= @book.genre.presence || 'N/A' %></td>
+      </tr>
+      <tr>
+        <th scope="row">Publisher</th>
+        <td><%= @book.publisher.presence || 'N/A' %></td>
+      </tr>
+      <tr>
+        <th scope="row">Publication Date</th>
+        <td><%= @book.publication_date ? l(@book.publication_date, format: :long) : 'N/A' %></td>
+      </tr>
+      <tr>
+        <th scope="row">Page Count</th>
+        <td><%= @book.page_count.presence || 'N/A' %></td>
+      </tr>
+      <% if @book.description.present? %>
+      <tr>
+        <th scope="row">Description</th>
+        <td><%= simple_format(@book.description) %></td> <%# Use simple_format for basic formatting %>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+  </figure>
+
+  <footer>
+    <%= link_to "Back to List", books_path, role: "button", class: "secondary" %>
+    <%# Add Edit/Delete links here in the future if needed %>
+    <%#= link_to "Edit", edit_book_path(@book), role: "button" %>
+  </footer>
+</article>
