@@ -1,21 +1,42 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: MyString
-  author: MyString
-  isbn: MyString
-  genre: MyString
-  description: MyText
-  publication_date: 2025-04-11
-  publisher: MyString
-  page_count: 1
+  title: "Fixture Book One"
+  author: "Author Alpha"
+  isbn: "111-1111111111"
+  genre: "Fiction"
+  description: "First book description."
+  publication_date: <%= Date.today - 1.year %>
+  publisher: "Publisher A"
+  page_count: 100
 
 two:
-  title: MyString
-  author: MyString
-  isbn: MyString
-  genre: MyString
-  description: MyText
-  publication_date: 2025-04-11
-  publisher: MyString
-  page_count: 1
+  title: "Fixture Book Two"
+  author: "Author Beta"
+  isbn: "222-2222222222"
+  genre: "Non-Fiction"
+  description: "Second book description."
+  publication_date: <%= Date.today - 2.years %>
+  publisher: "Publisher B"
+  page_count: 200
+
+searchable:
+  title: "The Searchable Title"
+  author: "Author Gamma"
+  isbn: "333-SEARCHME-333"
+  genre: "Sci-Fi"
+  description: "A book specifically for testing search."
+  publication_date: <%= Date.today - 6.months %>
+  publisher: "Publisher C"
+  page_count: 300
+
+another_fiction:
+  title: "Another Fiction Novel"
+  author: "Author Alpha" # Same author as 'one'
+  isbn: "444-4444444444"
+  genre: "Fiction" # Same genre as 'one'
+  description: "Yet another fiction book."
+  publication_date: <%= Date.today - 3.months %>
+  publisher: "Publisher A"
+  page_count: 150
+
