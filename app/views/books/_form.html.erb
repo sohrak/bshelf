@@ -58,8 +58,16 @@
   <hr>
   <small>* Required fields</small>
 
-  <footer class="grid">
-    <%= form.submit "Save Book", class: "contrast" %>
-    <%= link_to "Cancel", root_path, role: "button", class: "secondary outline" %>
+  <footer>
+    <%# Style buttons to be full width and add spacing between them %>
+    <%= form.submit "Save Book",
+          class: "contrast",
+          style: "width: 100%; margin-bottom: var(--pico-spacing, 1rem);" %>
+
+    <%= link_to "Cancel",
+          root_path,
+          role: "button",
+          class: "secondary outline",
+          style: "width: 100%;" %>
   </footer>
 <% end %>

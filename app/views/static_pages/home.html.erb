@@ -2,32 +2,49 @@
   <header><h1 style="text-align: center;">Welcome to bshelf</h1></header>
   <p style="text-align: center;">Organize and search your book collection.</p>
 
-  <div class="grid">
-    <article>
+  <%# Search section - centered %>
+  <div style="display: flex; justify-content: center; margin-bottom: 1rem;">
+    <article style="max-width: 600px; width: 100%;">
       <hgroup>
         <h2>Search Books</h2>
         <p>Find books by title, author, ISBN, or genre.</p>
       </hgroup>
       <%= form_with(url: books_path, method: :get, local: true) do |form| %>
-        <%= form.search_field :query, placeholder: "Search term...", aria_label: "Search" %>
-        <%= form.submit "Search", class: "contrast" %>
+        <div style="display: flex; gap: 0.5rem;">
+          <%= form.search_field :query, placeholder: "Search term...", aria_label: "Search", style: "flex-grow: 1;" %>
+          <%= form.submit "Search", class: "contrast" %>
+        </div>
       <% end %>
     </article>
+  </div>
 
-    <article>
+  <%# Remaining sections - centered, aligned items %>
+  <%# align-items: stretch ensures articles match height if content differs %>
+  <div style="display: flex; justify-content: center; gap: var(--grid-spacing-horizontal, 1rem); flex-wrap: wrap; margin-top: 1rem; align-items: stretch;">
+
+    <%# Article 1: Browse Collection - Using flex column layout %>
+    <%# Added display: flex, flex-direction: column %>
+    <article style="max-width: 350px; flex-basis: 300px; display: flex; flex-direction: column;">
+      <%# hgroup takes up available space naturally %>
       <hgroup>
         <h2>Browse Collection</h2>
         <p>View all books in the library.</p>
       </hgroup>
-      <%= link_to "Browse All Books", browse_books_path, role: "button", class: "contrast" %>
+      <%# Button pushed to bottom with margin-top: auto and made full width %>
+      <%= link_to "Browse All Books", browse_books_path, role: "button", class: "contrast", style: "width: 100%; margin-top: auto;" %>
     </article>
 
-    <article>
+    <%# Article 2: Add New Book - Using flex column layout %>
+    <%# Added display: flex, flex-direction: column %>
+    <article style="max-width: 350px; flex-basis: 300px; display: flex; flex-direction: column;">
+      <%# hgroup takes up available space naturally %>
       <hgroup>
         <h2>Add a New Book</h2>
         <p>Manually add a book to the collection.</p>
       </hgroup>
-      <%= link_to "Add Book", new_book_path, role: "button", class: "contrast" %>
+      <%# Button pushed to bottom with margin-top: auto and made full width %>
+      <%= link_to "Add Book", new_book_path, role: "button", class: "contrast", style: "width: 100%; margin-top: auto;" %>
     </article>
+
   </div>
 </article>
