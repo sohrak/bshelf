@@ -151,4 +151,18 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     assert_template :new # Check if the new form is rendered again
     assert_select "aside ul li", /Title can't be blank/ # Check for error message display
   end
+
+  test "should destroy book" do
+    # Assert that the number of Book records decreases by 1
+    assert_difference("Book.count", -1) do
+      # Send a DELETE request to the destroy action's route
+      delete book_url(@book)
+    end
+
+    # Assert that the response redirects to the books index page
+    assert_redirected_to books_url
+
+    # Optional: Assert that the flash notice is set correctly
+    assert_equal "Book was successfully deleted.", flash[:notice]
+  end
 end
