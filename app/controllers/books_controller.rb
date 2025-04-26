@@ -1,5 +1,5 @@
 class BooksController < ApplicationController
-  before_action :set_book, only: [ :show, :destroy ]
+  before_action :set_book, only: [ :show, :destroy, :edit, :update ]
   before_action :set_filter_options, only: [ :index ]
 
   # GET /books or /browse
@@ -50,6 +50,11 @@ class BooksController < ApplicationController
     @book = Book.new
   end
 
+
+  def edit
+    # @book is set by before_action
+  end
+
   # POST /books
   def create
     @book = Book.new(book_params)
@@ -59,6 +64,16 @@ class BooksController < ApplicationController
     else
       # Re-render the form with errors
       render :new, status: :unprocessable_entity
+    end
+  end
+
+
+  def update
+    if @book.update(book_params)
+      redirect_to @book, notice: "Book was successfully updated."
+    else
+      # Re-render the form with errors
+      render :edit, status: :unprocessable_entity
     end
   end
 

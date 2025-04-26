@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   root "static_pages#home"
 
   # Book routes for MVP
-  resources :books, only: [ :index, :show, :new, :create, :destroy ]
+  resources :books, only: [ :index, :show, :new, :create, :edit, :update, :destroy ]
 
   # Explicit browse route pointing to the book index
   get "browse", to: "books#index", as: "browse_books"
