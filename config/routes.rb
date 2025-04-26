@@ -8,6 +8,10 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "static_pages#home"
 
+  # Add the route for the ISBN lookup API endpoint
+  # Use a placeholder :isbn in the path
+  get "/books/lookup_isbn/:isbn", to: "books#lookup_isbn", as: "lookup_isbn_book"# , constraints: { isbn: /[0-9X-]+/ } # Allow digits, X, and hyphens
+
   # Book routes for MVP
   resources :books, only: [ :index, :show, :new, :create, :edit, :update, :destroy ]
 

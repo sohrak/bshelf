@@ -1,4 +1,7 @@
-<%= form_with(model: book, local: true) do |form| %>
+<%# app/views/books/_form.html.erb %>
+
+<%# Connect to the Stimulus controller %>
+<%= form_with(model: book, data: { controller: "isbn-lookup", isbn_lookup_url_value: lookup_isbn_book_path(isbn: ':isbn') }) do |form| %>
   <% if book.errors.any? %>
     <aside style="background-color: var(--pico-form-element-invalid-active-border-color); color: var(--pico-color-on-invalid); padding: var(--pico-block-spacing-vertical) var(--pico-block-spacing-horizontal); margin-bottom: var(--pico-block-spacing-vertical); border-radius: var(--pico-border-radius);">
       <hgroup>
@@ -16,60 +19,87 @@
   <div class="grid">
     <label>
       Title *
-      <%= form.text_field :title, required: true, aria_invalid: book.errors[:title].any? %>
+      <%# Add Stimulus target for title %>
+      <%= form.text_field :title, required: true, aria_invalid: book.errors[:title].any?, data: { isbn_lookup_target: "title" } %>
     </label>
     <label>
       Author *
-      <%= form.text_field :author, required: true, aria_invalid: book.errors[:author].any? %>
+      <%# Add Stimulus target for author %>
+      <%= form.text_field :author, required: true, aria_invalid: book.errors[:author].any?, data: { isbn_lookup_target: "author" } %>
     </label>
   </div>
 
+  <%# ISBN Lookup Section %>
+  <fieldset>
+    <legend>ISBN Lookup</legend>
+    <div class="grid">
+      <label>
+        ISBN
+        <%# Add Stimulus target for isbn input %>
+        <%= form.text_field :isbn, data: { isbn_lookup_target: "isbn" } %>
+      </label>
+      <%# Use a button styled with Pico classes, trigger Stimulus action %>
+      <button type="button"
+              class="secondary outline"
+              data-action="click->isbn-lookup#lookup"
+              style="margin-bottom: 0;"> <%# Align button with input %>
+        Lookup ISBN
+      </button>
+    </div>
+    <%# Status message area, controlled by Stimulus %>
+    <small data-isbn-lookup-target="status"></small>
+  </fieldset>
+  <%# End ISBN Lookup Section %>
+
+
   <div class="grid">
     <label>
-      ISBN
-      <%= form.text_field :isbn %>
+      Genre
+      <%# Add Stimulus target for genre %>
+      <%= form.text_field :genre, data: { isbn_lookup_target: "genre" } %>
     </label>
     <label>
-      Genre
-      <%= form.text_field :genre %>
+      Publisher
+      <%# Add Stimulus target for publisher %>
+      <%= form.text_field :publisher, data: { isbn_lookup_target: "publisher" } %>
     </label>
   </div>
 
    <div class="grid">
-    <label>
-      Publisher
-      <%= form.text_field :publisher %>
-    </label>
      <label>
        Publication Date
-       <%= form.date_field :publication_date %>
+       <%# Add Stimulus target for publication_date %>
+       <%# Using text_field as OpenLibrary date format varies. Could use date_field if parsing is added %>
+       <%= form.text_field :publication_date, data: { isbn_lookup_target: "publicationDate" } %>
      </label>
      <label>
        Page Count
-       <%= form.number_field :page_count, min: 0 %>
+       <%# Add Stimulus target for page_count %>
+       <%= form.number_field :page_count, min: 0, data: { isbn_lookup_target: "pageCount" } %>
      </label>
+     <%# Add an empty label or adjust grid columns if needed for alignment %>
+     <label></label>
   </div>
 
   <label>
     Description
-    <%= form.text_area :description, rows: 5 %>
+    <%# Add Stimulus target for description (optional) %>
+    <%= form.text_area :description, rows: 5, data: { isbn_lookup_target: "description" } %>
   </label>
 
   <hr>
   <small>* Required fields</small>
 
   <footer>
-    <%# Style buttons to be full width and add spacing between them %>
     <%= form.submit "Save Book",
           class: "contrast",
           style: "width: 100%; margin-bottom: var(--pico-spacing, 1rem);" %>
 
-    <%# Determine the correct path for the Cancel button %>
     <% cancel_path = book.persisted? ? book_path(book) : books_path %>
     <%= link_to "Cancel",
-          cancel_path, # Use the determined path
+          cancel_path,
           role: "button",
           class: "secondary outline",
           style: "width: 100%;" %>
-  </footer> 
+  </footer>
 <% end %>
