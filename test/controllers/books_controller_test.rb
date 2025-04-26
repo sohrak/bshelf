@@ -8,6 +8,15 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     # Example: Get one of the fixture books for show/edit/update/destroy tests
     @book = books(:one)
     @searchable_book = books(:searchable)
+    @valid_update_params = {
+      title: "Updated Title",
+      author: "Updated Author",
+      genre: "Updated Genre"
+    }
+    @invalid_update_params = {
+      title: "", # Invalid: Title cannot be blank
+      author: "Some Author"
+    }
   end
 
   # --- Index Action Tests ---
@@ -164,5 +173,55 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
 
     # Optional: Assert that the flash notice is set correctly
     assert_equal "Book was successfully deleted.", flash[:notice]
+  end
+
+  test "should get edit" do
+    get edit_book_url(@book)
+    assert_response :success
+    assert_select "h1", "Edit Book: #{@book.title}" # Check heading
+    assert_select "form[action=?]", book_path(@book) # Check form action
+    assert_select "input[name='book[title]'][value=?]", @book.title # Check field pre-population
+  end
+
+  test "should update book with valid parameters" do
+    # Send a PATCH request to the update action
+    patch book_url(@book), params: { book: @valid_update_params }
+
+    # Reload the book instance from the database to check updated attributes
+    @book.reload
+
+    # Assert that the attributes were updated
+    assert_equal "Updated Title", @book.title
+    assert_equal "Updated Author", @book.author
+    assert_equal "Updated Genre", @book.genre
+
+    # Assert that the user is redirected to the book's show page
+    assert_redirected_to book_url(@book)
+
+    # Optional: Check the flash notice
+    assert_equal "Book was successfully updated.", flash[:notice]
+  end
+
+  test "should not update book with invalid parameters" do
+    # Store original values
+    original_title = @book.title
+    original_author = @book.author
+
+    # Send a PATCH request with invalid data
+    patch book_url(@book), params: { book: @invalid_update_params }
+
+    # Reload the book instance to ensure it wasn't changed
+    @book.reload
+
+    # Assert that the attributes were NOT updated
+    assert_equal original_title, @book.title
+    assert_equal original_author, @book.author # Author shouldn't change either
+
+    # Assert that the edit form is re-rendered with an unprocessable_entity status
+    assert_response :unprocessable_entity
+    assert_template :edit # Check that the edit template is rendered
+
+    # Optional: Check that error messages are displayed (adjust selector if needed)
+    assert_select "aside ul li", /Title can't be blank/ # Or the specific error message from your model validation
   end
 end
