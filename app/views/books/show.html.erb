@@ -41,6 +41,13 @@
 
   <footer>
     <%= link_to "Back to List", books_path, role: "button", class: "secondary" %>
+    <%= link_to "Delete Book", 
+      @book, 
+      role: "button",
+      data: { 
+        turbo_method: :delete,
+        turbo_confirm: "Are you sure you want to delete this book? This action cannot be undone." },
+      class: "contrast" %> 
     <%# Add Edit/Delete links here in the future if needed %>
     <%#= link_to "Edit", edit_book_path(@book), role: "button" %>
   </footer>

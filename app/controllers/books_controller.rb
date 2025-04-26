@@ -1,5 +1,5 @@
 class BooksController < ApplicationController
-  before_action :set_book, only: [ :show ]
+  before_action :set_book, only: [ :show, :destroy ]
   before_action :set_filter_options, only: [ :index ]
 
   # GET /books or /browse
@@ -59,6 +59,21 @@ class BooksController < ApplicationController
     else
       # Re-render the form with errors
       render :new, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @book.destroy! # Use destroy! to raise an error if deletion fails
+
+    respond_to do |format|
+      format.html { redirect_to books_url, notice: "Book was successfully deleted." }
+      format.json { head :no_content }
+    end
+  rescue ActiveRecord::RecordNotDestroyed => e
+    # Optional: Handle cases where deletion might fail (e.g., due to dependent records)
+    respond_to do |format|
+      format.html { redirect_to @book, alert: "Book could not be deleted: #{e.message}" }
+      format.json { render json: { error: e.message }, status: :unprocessable_entity }
     end
   end
 
